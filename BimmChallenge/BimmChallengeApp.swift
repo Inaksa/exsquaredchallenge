@@ -11,7 +11,10 @@ import SwiftUI
 struct BimmChallengeApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                MainView()
+            }
+            
         }
     }
 }
