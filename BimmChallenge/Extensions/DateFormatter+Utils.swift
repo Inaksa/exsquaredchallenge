@@ -18,3 +18,11 @@ extension DateFormatter {
         return df
     }()
 }
+
+extension Date {
+    func timeAgo() -> String {
+        let df = RelativeDateTimeFormatter()
+        df.unitsStyle = .full
+        return df.localizedString(for: self, relativeTo: Date())
+    }
+}
