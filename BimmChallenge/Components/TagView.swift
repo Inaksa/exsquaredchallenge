@@ -9,8 +9,10 @@ import SwiftUI
 
 struct TagView: View {
     let tag: String
+    var useFirstLetter: Bool = false
+
     var body: some View {
-        Text(tag.uppercased())
+        Text(useFirstLetter ? String(tag.uppercased().first!) : tag.uppercased())
             .font(.footnote)
             .fontWeight(.light)
             .multilineTextAlignment(.center)
@@ -24,18 +26,17 @@ struct TagView: View {
 }
 
 #Preview {
-    func GenerateTags(_ number: Int) -> [String] {
-        var retValue: [String] = []
-        for i in 0..<number {
-            retValue.append("Tag \(String(repeating: "0", count: i))\(i)")
-        }
-        return retValue
-    }
+    let tags: [String] = ["Tag 0", "Tag 1", "Tag 2", "Tag 3", "Tag 4", "Tag 5", "Tag 6", "Tag 7", "Tag 8", "Tag 9"]
 
-    return ScrollView {
+    ScrollView {
         GeometryReader { geom in
-            FlexibleView(availableWidth: geom.size.width, data: GenerateTags(20), spacing: 8, alignment: .leading) { elem in
-                TagView(tag: elem)
+            FlexibleView(
+                availableWidth: geom.size.width,
+                data: tags,
+                spacing: 8,
+                alignment: .leading
+            ) { elem in
+                TagView(tag: elem, useFirstLetter: true)
             }
             .padding()
         }

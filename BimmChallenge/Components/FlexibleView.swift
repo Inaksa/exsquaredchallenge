@@ -54,18 +54,12 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
 }
 
 #Preview {
-    func GenerateTags(_ number: Int) -> [String] {
-        var retValue: [String] = []
-        for i in 0..<number {
-            retValue.append("Tag \(String(repeating: "0", count: i))\(i)")
-        }
-        return retValue
-    }
-    var elems: [String] = GenerateTags(20)
-    return ScrollView {
+    var elems: [String] = Array(1...20).map(\.description)
+
+    ScrollView {
         GeometryReader { geom in
             FlexibleView(availableWidth: geom.size.width, data: elems, spacing: 8, alignment: .leading) { elem in
-                TagView(tag: elem)
+                TagView(tag: elem, useFirstLetter: false)
             }
             .frame(maxWidth: .infinity)
             .padding()
