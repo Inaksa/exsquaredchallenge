@@ -42,4 +42,4 @@ Potential improvements:
 
 * Since there is no local storage cats added are not stored between runs. Also refreshing the list will cause anything added to be lost. The reason is that new cats are stored in memory and the refresh cleans everything.
 
-* The screen to add a cat could use much more love, right now it allows to provide a name for the cat (something that the JSON provided does not include), enter the owner and modifying the tags list. I could have made this a bottom sheet in the cat list view. Another improvement could be defining the picture for a given cat. Finally, the user may leave the Add New Cat without saving, an alert should be used asking if the user wants to save the changes.
+* The screen to add a cat could use much more love, right now it allows to provide a name for the cat (something that the JSON provided does not include), enter the owner and modifying the tags list. I could have made this a bottom sheet in the cat list view. Another improvement could be defining the picture for a given cat.
