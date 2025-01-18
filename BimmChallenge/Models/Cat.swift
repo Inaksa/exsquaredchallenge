@@ -46,7 +46,7 @@ final class Cat: Codable, Identifiable, Hashable, Equatable {
         }
         if let updatedAtString = try container.decodeIfPresent(String.self, forKey: .updatedAt),
            let updatedAtDate = df.date(from: updatedAtString) {
-            self.createdAt = updatedAtDate
+            self.updatedAt = updatedAtDate
         }
     }
 
