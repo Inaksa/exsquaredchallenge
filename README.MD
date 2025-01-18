@@ -33,3 +33,5 @@ Potential improvements:
 * There's a rudimentary paging system to get a page with n results. In this version the value of n is fixed. This could change to better suit the user preferences.
 
 * Back to the JSON file, this presents an issue, since you can't parse "up to the nth element", everything ends in memory, this works for a small list but a bigger one with hundreds would probably run into memory issues. A solution would be to retrieve the elements with an from a server where the API supports pagination.
+
+* Adding a local database (or an API supporting it) could allow the user to add new cats to the list.
