@@ -8,8 +8,15 @@
 import SwiftUI
 
 extension Cat {
-    func getCatOwnerLegend() -> String {
+    var hasOwner: Bool {
         guard let owner = owner, !owner.isEmpty else {
+            return false
+        }
+        return owner.lowercased() != "null"
+    }
+
+    func getCatOwnerLegend() -> String {
+        guard hasOwner, let owner = owner else {
             return "I am a free cat!"
         }
 
@@ -29,6 +36,11 @@ struct CatCell: View {
         HStack(alignment: .top) {
             CatPicture(catId: cat.id)
                 .frame(width: 40, height: 40)
+                .aspectRatio(contentMode: .fill)
+                .overlay {
+                    Circle()
+                        .stroke(style: StrokeStyle(lineWidth: 1))
+                }
                 .clipShape(Circle())
                 .clipped()
             VStack(alignment: .leading) {
