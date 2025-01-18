@@ -7,27 +7,6 @@
 
 import SwiftUI
 
-extension Cat {
-    var hasOwner: Bool {
-        guard let owner = owner, !owner.isEmpty else {
-            return false
-        }
-        return owner.lowercased() != "null"
-    }
-
-    func getCatOwnerLegend() -> String {
-        guard hasOwner, let owner = owner else {
-            return "I am a free cat!"
-        }
-
-        if owner.lowercased() != "null" {
-            return "My owner is \(owner)"
-        } else {
-            return "I am a free cat!"
-        }
-    }
-}
-
 struct CatCell: View {
     let cat: Cat
     @State private var selectedTag: String?

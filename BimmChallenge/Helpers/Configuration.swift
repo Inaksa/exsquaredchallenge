@@ -15,4 +15,6 @@ enum Configuration {
         static let filename: String = "Datasource"
         static let fileExtension: String = "json"
     }
+
+    static let defaultCatName: String = "No Name"
 }

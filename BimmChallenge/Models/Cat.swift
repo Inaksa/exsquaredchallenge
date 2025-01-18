@@ -66,15 +66,3 @@ final class Cat: Codable, Identifiable, Hashable, Equatable {
         id.hash(into: &hasher)
     }
 }
-
-extension Cat {
-    static var random: Cat {
-        var selectedTags: Set<String> = Set()
-        let tagsCount = Int.random(in: 0...5)
-        while selectedTags.count < tagsCount {
-            selectedTags.insert(RandomGenerator.getTag())
-        }
-
-        return Cat(id: UUID().uuidString, tags: [String](selectedTags).sorted(), owner: RandomGenerator.getName())
-    }
-}

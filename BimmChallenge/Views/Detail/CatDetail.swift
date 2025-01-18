@@ -52,6 +52,7 @@ struct CatDetail: View {
                 .font(.caption2.italic())
                 .foregroundStyle(.secondary)
             }
+            .navigationTitle(cat.getNameLegend())
             .frame(maxWidth: .infinity)
             .sheet(isPresented: $displayBigImage) {
                 CatPicture(catId: cat.id)
