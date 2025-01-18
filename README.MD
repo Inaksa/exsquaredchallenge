@@ -14,13 +14,17 @@ Assumptions:
 
 Things to I saw:
 
-* The model on the JSON is very different than caas. And the cats' ids dont have a matching picture in the caas API. This can be seen in the list not showing the picture of the first two cats for example.
+* The model on the JSON is very different than caas. And the cats' ids dont have a matching picture in the caas API sometimes. This can be seen in the list not showing the picture of the first two cats for example.
 
 * Those cats with no corresponding picture display a "Missing" text. For those that have, I used the Async image. 
 
 * I also made a little cache to store the images as I retrieve them and dumped them in files, so during runs the same images are not requested twice (this could be improved to store them between runs).
 
 * Implemented a list of cats that contain all tags for a each cat, this list allows tapping on a tag and that single tag will be displayed with the whole text. The list also implements an infinite scrolling (the limit is reached when no results are returned), it allows to search (it works like filtering) and it supports pull to refresh. This implies that in order to get to the detail page you need to click the outside of the list of tags.
+
+* When the user performs a search, it is done against all cats in the list locally, meaning that only already listed cats will be filtered.
+
+* The search criteria is compared against the tags for a given cat and the owner field. The way it is implemented goes twice over the list of tags, this means you perform the comparision at O(2n + 1) in the worst case (O(n)),  where n is the number of tags and the "+ 1" is related to adding the owner to the list of valid compares.
 
 * The detail screen, shows all tags (unlike the cells of the list all tags are expanded), the updatedAt and createdAt are displayed at the bottom using a relative formatting.
 

@@ -18,7 +18,12 @@ struct MainView: View {
         } else {
             var cats: [Cat] = []
             viewModel.cats.forEach { cat in
-                if cat.tags.first(where: { $0.localizedCaseInsensitiveContains(filterText) }) != nil {
+                var fieldsToSearch: [String] = []
+                cat.tags.forEach { fieldsToSearch.append($0) }
+                if let owner = cat.owner {
+                    fieldsToSearch.append(owner)
+                }
+                if fieldsToSearch.first(where: { $0.localizedCaseInsensitiveContains(filterText) }) != nil {
                     cats.append(cat)
                 }
             }
