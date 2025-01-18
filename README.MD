@@ -38,4 +38,5 @@ Potential improvements:
 
 * Back to the JSON file, this presents an issue, since you can't parse "up to the nth element", everything ends in memory, this works for a small list but a bigger one with hundreds would probably run into memory issues. A solution would be to retrieve the elements with an from a server where the API supports pagination.
 
-* Adding a local database (or an API supporting it) could allow the user to add new cats to the list.
+* Since there is no local storage cats added are not stored between runs. Also refreshing the list will cause anything added to be lost. The reason is that new cats are stored in memory and the refresh cleans everything.
+

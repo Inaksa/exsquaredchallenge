@@ -59,4 +59,14 @@ class MainViewModel: ObservableObject {
         cats.removeAll()
         loadNextPage()
     }
+
+    func saveCat(_ cat: Cat) {
+        cat.updatedAt = Date()
+        if let anIndex = cats.firstIndex(where: { $0.id == cat.id }) {
+            cats[anIndex] = cat
+        } else {
+            cat.createdAt = Date()
+            cats.append(cat)
+        }
+    }
 }

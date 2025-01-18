@@ -64,6 +64,17 @@ struct MainView: View {
             viewModel.loadFirstPage()
         }
         .searchable(text: $filterText)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    viewModel.saveCat(.random)
+                } label: {
+                    Image(systemName: "plus")
+                        .resizable()
+                }
+                .tint(.primary)
+            }
+        }
     }
 }
 
