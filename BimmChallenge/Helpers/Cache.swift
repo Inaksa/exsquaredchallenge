@@ -37,7 +37,7 @@ class Cache {
     }
 
     func isDefined(key: String) -> Bool {
-        keys.contains(where: { $0 == key + Configuration.extensionCacheFile })
+        keys.contains(where: { $0.hasSuffix(key + "." + Configuration.extensionCacheFile) })
     }
 
     func saveData(_ data: Data, for key: String) {

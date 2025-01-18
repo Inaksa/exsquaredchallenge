@@ -15,7 +15,7 @@ struct CatPicture: View {
            let image = UIImage(data: data) {
             Image(uiImage: image)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
         } else {
             AsyncImage(url: URL(string: "https://cataas.com/cat/\(catId)")!) { phase in
                 switch phase {
@@ -24,11 +24,6 @@ struct CatPicture: View {
                         .overlay {
                             ProgressView()
                         }
-                        .overlay {
-                            Circle()
-                                .stroke(style: StrokeStyle(lineWidth: 1))
-                        }
-
                 case .success(let image):
                     image
                         .resizable()
@@ -41,11 +36,6 @@ struct CatPicture: View {
                                 }
                             }
                         }
-                        .overlay {
-                            Circle()
-                                .stroke(style: StrokeStyle(lineWidth: 1))
-                        }
-
                 default:
                     Color.clear
                         .overlay {
@@ -54,16 +44,11 @@ struct CatPicture: View {
                                 .font(.caption2)
                                 .textScale(.secondary, isEnabled: true)
                         }
-                        .overlay {
-                            Circle()
-                                .stroke(style: StrokeStyle(lineWidth: 1))
-                        }
                 }
             }
         }
     }
 }
-
 
 #Preview {
     CatPicture(catId: "123")
