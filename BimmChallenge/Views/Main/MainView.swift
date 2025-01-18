@@ -7,8 +7,6 @@
 import UIKit
 import SwiftUI
 
-
-
 struct MainView: View {
     @ObservedObject var viewModel = MainViewModel()
 
