@@ -66,12 +66,13 @@ struct MainView: View {
         .searchable(text: $filterText)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewModel.saveCat(.random)
-                } label: {
-                    Image(systemName: "plus")
-                        .resizable()
-                }
+                NavigationLink(
+                    destination: { AddOrEdit(cat: nil, storageService: viewModel) },
+                    label: {
+                        Image(systemName: "plus")
+                            .resizable()
+                    }
+                )
                 .tint(.primary)
             }
         }

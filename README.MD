@@ -6,6 +6,8 @@ I used the JSON provided in the pdf document as the datasource for the list of c
 
 The tag list was taken from a previous project I made, that in turn was part of an article explaining how to implement said component (an article I read about a couple of years ago)
 
+In a real world scenario, the detail would likely be added but as I ran out of time I decided to leave it out. You can add cats but not edit them.
+
 Assumptions:
 
 * The JSON implies that all cats have owners, since the value for owner is a string or it says "null" (as also a string), I assumed what was meant was that those "null" mean there are no owner.
@@ -34,9 +36,10 @@ Potential improvements:
 
 * Since the list of cats was provided, it is used locally, within the project there is a file Datasource.json which has it, however a real world app would probably request the list from the server.
 
-* There's a rudimentary paging system to get a page with n results. In this version the value of n is fixed. This could change to better suit the user preferences.
+* There's a rudimentary paging system to get a page with n results. In this version the value of n is fixed and it is defined in the Configuration class. This could change to better suit the user preferences.
 
 * Back to the JSON file, this presents an issue, since you can't parse "up to the nth element", everything ends in memory, this works for a small list but a bigger one with hundreds would probably run into memory issues. A solution would be to retrieve the elements with an from a server where the API supports pagination.
 
 * Since there is no local storage cats added are not stored between runs. Also refreshing the list will cause anything added to be lost. The reason is that new cats are stored in memory and the refresh cleans everything.
 
+* The screen to add a cat could use much more love, right now it allows to provide a name for the cat (something that the JSON provided does not include), enter the owner and modifying the tags list. I could have made this a bottom sheet in the cat list view. Another improvement could be defining the picture for a given cat. Finally, the user may leave the Add New Cat without saving, an alert should be used asking if the user wants to save the changes.

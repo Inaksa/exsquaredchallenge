@@ -11,6 +11,10 @@ struct CatDetail: View {
     @State private var displayBigImage: Bool = false
     let cat: Cat
 
+    init(cat: Cat) {
+        self.cat = cat
+    }
+    
     var body: some View {
         GeometryReader { geom in
             VStack {
@@ -60,7 +64,6 @@ struct CatDetail: View {
                     .onTapGesture {
                         displayBigImage.toggle()
                     }
-
             }
         }
     }
