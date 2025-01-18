@@ -59,12 +59,10 @@ class Cache {
 
     func getData(for key: String) -> Data? {
         guard let fileName = cachedFiles.filter({ $0.lastPathComponent.hasPrefix(key) }).first,
-              let stringContent = try? String(contentsOf: fileName, encoding: .utf8),
-              let data = stringContent.data(using: .utf8)
-        else {
+              let data = try? Data(contentsOf: fileName) else {
             return nil
         }
-
+        
         return data
     }
 
