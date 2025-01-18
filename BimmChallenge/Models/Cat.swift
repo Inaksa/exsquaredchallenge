@@ -61,44 +61,12 @@ final class Cat: Codable, Identifiable, Hashable, Equatable {
 
 extension Cat {
     static var random: Cat {
-        let tags: [String] = [
-            "kitten",
-            "several",
-            "gif",
-            "manspreading",
-            "closed eyes",
-            "sleepy",
-            "bed",
-            "gif",
-            "tuxedo",
-            "vending machine",
-            "stuck",
-            "glass",
-            "trapped",
-            "norwegian forest cat",
-            "daisy",
-            "gaming",
-            "pc",
-            "small cat",
-            "brazilian",
-            "brazilian cat",
-            "brasileira",
-            "female cat",
-            "female",
-            "black & white",
-            "donna",
-            "londrinense",
-            "londrina",
-            "cute cat",
-            "cute",
-        ]
         var selectedTags: Set<String> = Set()
         let tagsCount = Int.random(in: 0...5)
         while selectedTags.count < tagsCount {
-            // There is always one element
-            selectedTags.insert(tags.randomElement()!)
+            selectedTags.insert(RandomGenerator.getTag())
         }
-        
-        return Cat(id: UUID().uuidString, tags: [String](selectedTags).sorted())
+
+        return Cat(id: UUID().uuidString, tags: [String](selectedTags).sorted(), owner: RandomGenerator.getName())
     }
 }
