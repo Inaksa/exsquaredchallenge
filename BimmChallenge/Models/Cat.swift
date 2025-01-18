@@ -11,6 +11,7 @@ typealias CatTag = String
 
 final class Cat: Codable, Identifiable, Hashable, Equatable {
     var id: String
+    var name: String = Configuration.defaultCatName
     var tags: [CatTag]
     var owner: String?
     var createdAt: Date?
@@ -18,14 +19,16 @@ final class Cat: Codable, Identifiable, Hashable, Equatable {
 
     enum CodingKeys: String, CodingKey {
         case id = "_id"
+        case name
         case tags
         case owner
         case createdAt
         case updatedAt
     }
 
-    init(id: String, tags: [CatTag] = [], owner: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    init(id: String, name: String = "", tags: [CatTag] = [], owner: String? = nil, createdAt: Date? = nil, updatedAt: Date? = nil) {
         self.id = id
+        self.name = name
         self.tags = tags
         self.owner = owner
         self.createdAt = createdAt
@@ -34,9 +37,14 @@ final class Cat: Codable, Identifiable, Hashable, Equatable {
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+
         self.id = try container.decode(String.self, forKey: .id)
+
+        self.name = try container.decodeIfPresent(String.self, forKey: .name) ?? Configuration.defaultCatName
+
         let decodedTags = try container.decodeIfPresent([CatTag].self, forKey: .tags)
         self.tags = decodedTags ?? []
+
         self.owner = try container.decodeIfPresent(String.self, forKey: .owner)
 
         let df = DateFormatter.caasDateFormatter

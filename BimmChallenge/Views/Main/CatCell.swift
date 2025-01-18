@@ -44,8 +44,13 @@ struct CatCell: View {
                 .clipShape(Circle())
                 .clipped()
             VStack(alignment: .leading) {
-                Text(cat.getCatOwnerLegend())
-                    .font(.caption.italic())
+                if cat.hasName {
+                    Text(cat.getNameLegend())
+                        .font(.caption)
+                } else {
+                    Text(cat.getCatOwnerLegend())
+                        .font(.caption.italic())
+                }
                 GeometryReader { geom in
                     ScrollView(.vertical, showsIndicators: false) {
                         FlexibleView(availableWidth: geom.size.width, data: cat.tags, spacing: 8, alignment: .leading) { elem in
@@ -73,5 +78,11 @@ struct CatCell: View {
 }
 
 #Preview {
-    CatCell(cat: Cat(id: "rV1MVEh0Af2Bm4O0", tags: ["Tag1", "Tag2"]))
+    CatCell(
+        cat: Cat(
+            id: "rV1MVEh0Af2Bm4O0",
+            name: "Test",
+            tags: ["Tag1", "Tag2"]
+        )
+    )
 }
