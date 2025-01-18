@@ -7,77 +7,56 @@
 
 import SwiftUI
 
+extension Cat {
+    func getCatOwnerLegend() -> String {
+        guard let owner = owner, !owner.isEmpty else {
+            return "I am a free cat!"
+        }
+
+        if owner.lowercased() != "null" {
+            return "My owner is \(owner)"
+        } else {
+            return "I am a free cat!"
+        }
+    }
+}
+
 struct CatCell: View {
     let cat: Cat
-    var body: some View {
-        HStack {
-            Group {
-                if Cache.shared.isDefined(key: cat.id),
-                   let data = Cache.shared.getData(for: cat.id),
-                   let image = UIImage(data: data) {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                } else {
-                    AsyncImage(url: URL(string: "https://cataas.com/cat/\(cat.id)")!) { phase in
-                        switch phase {
-                        case .empty:
-                            Color.clear
-                            .overlay {
-                                ProgressView()
-                            }
-                            .overlay {
-                                Circle()
-                                    .stroke(style: StrokeStyle(lineWidth: 1))
-                            }
+    @State private var selectedTag: String?
 
-                        case .success(let image):
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .onAppear {
-                                    DispatchQueue.main.async {
-                                        let renderer = ImageRenderer(content: image)
-                                        if let pngData = renderer.uiImage?.pngData() {
-                                            Cache.shared.saveData(pngData, for: cat.id)
-                                        }
-                                    }
-                                }
-                        default:
-                            Color.clear
-                                .overlay {
-                                    Text("No Cat Picture").multilineTextAlignment(.center)
-                                }
-                                .overlay {
-                                    Circle()
-                                        .stroke(style: StrokeStyle(lineWidth: 1))
-                                }
-                        }
-                    }
-                }
-            }
-                .frame(width: 100, height: 100)
+    var body: some View {
+        HStack(alignment: .top) {
+            CatPicture(catId: cat.id)
+                .frame(width: 40, height: 40)
                 .clipShape(Circle())
                 .clipped()
             VStack(alignment: .leading) {
-                Text(cat.id).font(.caption)
+                Text(cat.getCatOwnerLegend())
+                    .font(.caption.italic())
                 GeometryReader { geom in
-                    FlexibleView(availableWidth: geom.size.width, data: cat.tags, spacing: 8, alignment: .leading) { elem in
-                        TagView(tag: elem)
+                    ScrollView(.vertical, showsIndicators: false) {
+                        FlexibleView(availableWidth: geom.size.width, data: cat.tags, spacing: 8, alignment: .leading) { elem in
+                            TagView(tag: elem, useFirstLetter: selectedTag != elem)
+                                .onTapGesture {
+                                    withAnimation {
+                                        if selectedTag == elem {
+                                            selectedTag = nil
+                                        } else {
+                                            selectedTag = elem
+                                        }
+                                    }
+                                }
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: 100, alignment: .topLeading)
+            .clipped()
         }
             .frame(maxWidth: .infinity)
-            .padding()
-            .background {
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Configuration.cellBackground)
-            }
-
     }
 }
 
