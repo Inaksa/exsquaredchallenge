@@ -9,11 +9,31 @@ import SwiftUI
 
 struct MainView: View {
     @ObservedObject var viewModel = MainViewModel()
+    @State private var filterText: String = ""
+    @State private var showCatDetail: Bool = false
+
+    private var filteredCats: [Cat] {
+        if filterText == "" {
+            return viewModel.cats
+        } else {
+            var cats: [Cat] = []
+            viewModel.cats.forEach { cat in
+                if cat.tags.first(where: { $0.localizedCaseInsensitiveContains(filterText) }) != nil {
+                    cats.append(cat)
+                }
+            }
+            return cats
+        }
+    }
 
     var body: some View {
         List {
-            ForEach(viewModel.cats, id: \.id) { cat in
-                CatCell(cat: cat)
+            ForEach(filteredCats, id: \.id) { cat in
+                NavigationLink {
+                    CatDetail(cat: cat)
+                } label: {
+                    CatCell(cat: cat)
+                }
                     .listRowSeparator(.hidden)
             }
 
@@ -38,6 +58,7 @@ struct MainView: View {
         .refreshable {
             viewModel.loadFirstPage()
         }
+        .searchable(text: $filterText)
     }
 }
 
