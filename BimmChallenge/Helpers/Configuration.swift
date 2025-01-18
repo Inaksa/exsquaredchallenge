@@ -4,7 +4,7 @@
 //
 //  Created by Alex Maggio on 17/01/2025.
 //
-
+import SwiftUI
 
 enum Configuration {
     static let cellBackground: Color = Color(uiColor: UIColor.lightGray)
