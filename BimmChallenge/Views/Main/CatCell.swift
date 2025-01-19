@@ -13,7 +13,7 @@ struct CatCell: View {
 
     var body: some View {
         HStack(alignment: .top) {
-            CatPicture(catId: cat.id)
+            CatPicture(cat: cat)
                 .frame(width: 40, height: 40)
                 .aspectRatio(contentMode: .fill)
                 .overlay {

@@ -18,7 +18,7 @@ struct CatDetail: View {
     var body: some View {
         GeometryReader { geom in
             VStack {
-                CatPicture(catId: cat.id)
+                CatPicture(cat: cat)
                     .aspectRatio(contentMode: .fill)
                     .frame(height: 200)
                     .clipped()
@@ -59,7 +59,7 @@ struct CatDetail: View {
             .navigationTitle(cat.getNameLegend())
             .frame(maxWidth: .infinity)
             .sheet(isPresented: $displayBigImage) {
-                CatPicture(catId: cat.id)
+                CatPicture(cat: cat)
                     .ignoresSafeArea()
                     .onTapGesture {
                         displayBigImage.toggle()

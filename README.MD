@@ -33,8 +33,9 @@ Things to I saw:
 * In the detail screen, you can see a bigger version of the cat's picture, and tapping it will present the photo at its maximun size. This pictures are not requested over the network since the cache already haves them.
 
 Potential improvements:
+* Instead of using a JSON datasource, I could probably implement this using Firebase as a remote storage solution. Or in case we want to keep it local, the database could be implemented in CoreData or my favorite, SQLite.
 
-* Since the list of cats was provided, it is used locally, within the project there is a file Datasource.json which has it, however a real world app would probably request the list from the server.
+* Since the list of cats was provided we use it locally. Within the project there is a file 'Datasource.json' which has it, however a real world app would probably request the list from the server. This would solve issues related to persistence and refreshing.
 
 * There's a rudimentary paging system to get a page with n results. In this version the value of n is fixed and it is defined in the Configuration class. This could change to better suit the user preferences.
 

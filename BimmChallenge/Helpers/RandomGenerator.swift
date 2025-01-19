@@ -123,7 +123,8 @@ class RandomGenerator {
     ]
 
     static func getName() -> String? {
-        if Bool.random() {
+        let chanceOfName: Double = 0.8
+        if Double.random(in: 0...1) < chanceOfName {
             return names.randomElement()
         }
 

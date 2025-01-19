@@ -7,17 +7,17 @@
 import SwiftUI
 
 struct CatPicture: View {
-    let catId: String
+    let cat: Cat
 
     var body: some View {
-        if Cache.shared.isDefined(key: catId),
-           let data = Cache.shared.getData(for: catId),
+        if Cache.shared.isDefined(key: cat.id),
+           let data = Cache.shared.getData(for: cat.id),
            let image = UIImage(data: data) {
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         } else {
-            AsyncImage(url: URL(string: "https://cataas.com/cat/\(catId)")!) { phase in
+            AsyncImage(url: URL(string: "https://cataas.com/cat/\(cat.id)")!) { phase in
                 switch phase {
                 case .empty:
                     Color.clear
@@ -32,17 +32,22 @@ struct CatPicture: View {
                             DispatchQueue.main.async {
                                 let renderer = ImageRenderer(content: image)
                                 if let pngData = renderer.uiImage?.pngData() {
-                                    Cache.shared.saveData(pngData, for: catId)
+                                    Cache.shared.saveData(pngData, for: cat.id)
                                 }
                             }
                         }
                 default:
-                    Color.clear
+                    Color.randomPastelColor
                         .overlay {
-                            Text("Missing")
-                                .multilineTextAlignment(.center)
-                                .font(.caption2)
-                                .textScale(.secondary, isEnabled: true)
+                            if cat.hasName, let firstLetter = cat.name.uppercased().first {
+                                Text("\(firstLetter)")
+                                    .font(.title.bold())
+                            } else {
+                                Text("Missing")
+                                    .multilineTextAlignment(.center)
+                                    .font(.caption2)
+                                    .textScale(.secondary)
+                            }
                         }
                 }
             }
@@ -51,5 +56,11 @@ struct CatPicture: View {
 }
 
 #Preview {
-    CatPicture(catId: "123")
+    VStack(spacing: 16) {
+        CatPicture(cat: Cat(id: "1", name: "Fluffykins"))
+            .frame(width: 100, height: 100)
+        CatPicture(cat: Cat(id: "1"))
+            .frame(width: 100, height: 100)
+
+    }
 }
