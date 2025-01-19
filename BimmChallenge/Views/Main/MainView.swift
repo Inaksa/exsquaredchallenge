@@ -42,6 +42,7 @@ struct MainView: View {
                     .listRowSeparator(.hidden)
             }
 
+            // Infinite scrolling behavior
             if viewModel.reachEndOfList {
                 EmptyView()
             } else {
@@ -65,7 +66,7 @@ struct MainView: View {
         }
         .searchable(text: $filterText)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarTrailing) {
                 NavigationLink(
                     destination: { AddOrEdit(cat: nil, storageService: viewModel) },
                     label: {
@@ -73,6 +74,15 @@ struct MainView: View {
                             .resizable()
                     }
                 )
+                .tint(.primary)
+            }
+
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    viewModel.saveCat(.random)
+                } label: {
+                    Text("Add Random")
+                }
                 .tint(.primary)
             }
         }
