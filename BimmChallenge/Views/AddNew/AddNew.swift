@@ -34,16 +34,25 @@ struct AddOrEdit: View {
             VStack(alignment: .leading) {
                 Text("Name")
                 TextField(Configuration.defaultCatName, text: $name)
+                    .textFieldStyle(.roundedBorder)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
+
             }
             VStack(alignment: .leading) {
                 Text("Owner")
                 TextField("Owner", text: $owner)
+                    .textFieldStyle(.roundedBorder)
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled()
             }
             VStack(alignment: .leading) {
                 Text("Tags")
                 HStack {
                     if addingTags {
                         TextField("Add tag", text: $tagsToEdit)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
                             .focused($isTagsEditingFocused)
                             .onChange(of: tagsToEdit) { _, newValue in
                                 tags = newValue.split(separator: " ").map({ String($0) })
@@ -118,6 +127,7 @@ struct AddOrEdit: View {
                     )
                 }
         }
+            .padding()
     }
 
 }
