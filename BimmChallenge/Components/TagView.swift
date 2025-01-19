@@ -11,6 +11,15 @@ struct TagView: View {
     let tag: String
     var useFirstLetter: Bool = false
 
+    private var bgColor: Color
+
+    init(tag: String, useFirstLetter: Bool = false) {
+        self.tag = tag
+        self.useFirstLetter = useFirstLetter
+        self.bgColor = TagView.colors[tag.uppercased().hashValue] ?? Color.randomPastelColor
+        TagView.colors[tag.uppercased().hashValue] = self.bgColor
+    }
+
     var body: some View {
         Text(useFirstLetter ? String(tag.uppercased().first!) : tag.uppercased())
             .font(.footnote)
@@ -20,9 +29,11 @@ struct TagView: View {
             .padding(.horizontal, 8)
             .background {
                 Capsule()
-                    .fill(Color.random.opacity(0.3))
+                    .fill(bgColor)
             }
     }
+
+    static private var colors: [Int: Color] = [:]
 }
 
 #Preview {
@@ -44,10 +55,3 @@ struct TagView: View {
     }
 
 }
-
-extension Color {
-    static var random: Color {
-        Color(.init(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1)))
-    }
-}
-

@@ -54,7 +54,7 @@ struct FlexibleView<Data: Collection, Content: View>: View where Data.Element: H
 }
 
 #Preview {
-    var elems: [String] = Array(1...20).map(\.description)
+    let elems: [String] = Array(1...20).map(\.description)
 
     ScrollView {
         GeometryReader { geom in
